@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MeToMyBest - Home</title>
+    <title>Reaction Test</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>MeToMyBest</h1>
-        <p>Your journey to self-improvement starts here.</p>
-        <div class="directory">
-            <a href="#">Brain Exercises</a>
-            <a href="#">Goal Tracking</a>
-            <a href="#">Advice & Tips</a>
-            <a href="#">Set Email Reminders</a>
-        </div>
-        <button class="toggle-mode" onclick="toggleMode()">Toggle Light/Dark Mode</button>
+    <button id="dark-mode-toggle">Toggle Dark Mode</button>
+    <div id="reaction-container" class="waiting">
+        <p id="message">Wait for green...</p>
     </div>
+    <p id="result"></p>
     <script src="script.js"></script>
 </body>
 </html>
+
