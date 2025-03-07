@@ -1,42 +1,34 @@
-let startTime;
-let timeout;
+document.addEventListener("DOMContentLoaded", () => {
+    const reactionBox = document.getElementById("reaction-box");
+    const startButton = document.getElementById("start-reaction-test");
+    const reactionTimeDisplay = document.getElementById("reaction-time");
+    let startTime, timeoutId;
 
-const container = document.getElementById("reaction-container");
-const message = document.getElementById("message");
-const result = document.getElementById("result");
-const darkModeToggle = document.getElementById("dark-mode-toggle");
+    if (startButton) {
+        startButton.addEventListener("click", () => {
+            reactionBox.textContent = "Wait for green...";
+            reactionBox.style.backgroundColor = "white";
+            reactionTimeDisplay.textContent = "";
+            
+            const randomDelay = Math.floor(Math.random() * 3000) + 2000;
+            timeoutId = setTimeout(() => {
+                reactionBox.style.backgroundColor = "green";
+                reactionBox.textContent = "CLICK!";
+                startTime = Date.now();
+            }, randomDelay);
+        });
 
-darkModeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-});
-
-container.addEventListener("click", handleClick);
-
-function startGame() {
-    message.textContent = "Wait for green...";
-    container.className = "waiting";
-    result.textContent = "";
-
-    let delay = Math.floor(Math.random() * 3000) + 2000;
-    timeout = setTimeout(() => {
-        startTime = Date.now();
-        container.className = "ready";
-        message.textContent = "CLICK NOW!";
-    }, delay);
-}
-
-function handleClick() {
-    if (container.classList.contains("waiting")) {
-        clearTimeout(timeout);
-        container.className = "too-soon";
-        message.textContent = "Too soon! Click to try again.";
-    } else if (container.classList.contains("ready")) {
-        let reactionTime = Date.now() - startTime;
-        result.textContent = `Your reaction time: ${reactionTime} ms`;
-        container.className = "waiting";
-        message.textContent = "Click to try again.";
+        reactionBox.addEventListener("click", () => {
+            if (reactionBox.style.backgroundColor === "green") {
+                const reactionTime = Date.now() - startTime;
+                reactionTimeDisplay.textContent = `Your reaction time: ${reactionTime} ms`;
+                reactionBox.textContent = "Wait for green...";
+                reactionBox.style.backgroundColor = "white";
+            } else {
+                clearTimeout(timeoutId);
+                reactionBox.textContent = "Too soon! Try again.";
+                reactionBox.style.backgroundColor = "red";
+            }
+        });
     }
-    startGame();
-}
-
-startGame();
+});
